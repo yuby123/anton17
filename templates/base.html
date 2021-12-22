@@ -1,71 +1,84 @@
 <html>
-<head>
-<title>Calculator </title>
-<style>
-body{
-background:gray;
+    <head>
+        <style type="text/css">
+
+#bmi-calculator {
+    border: 1px solid;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    width: 29em;
+    padding: 1em;;
 }
-*{
-box-sizing:border-box;
--webkit-box-sizing:border-box;
--moz-box-sizing:border-box;
+
+#bmi-calculator .field label {
+    width: 3em;
 }
-.wrap{
-width:400px;
-margin:auto;
-height:auto;
-background: linear-gradient(50deg, #B000EA,black);
-padding:15px;
-border-radius: 10px;
-box-shadow: 1px 5px 10px black
+
+#bmiresult {
+    width: 4em;
+    height: 2em;
+    line-height: 2em;
+    float: left;
+    position: relative;
+    font-size: 2em;
+    text-align: center;
 }
-input[type=text]{
-width:80%;
-padding:10px;
-font-size:22px;
-font-height:bold;
-margin-top:20px;
-border-radius:5px;
-}
-input[type=button]{
-width:70px;
-padding:10px;
-font-size:22px;
-font-height:bold;
-border-radius:5px;
-}
-#del{
-width:60%;
-}
-</style>
-</head>
-<div class="Wrap">
-<form name ="cal">
-<input type="text" name ="display">
-<br><br>
-<input type="button" value ="9" onclick ="cal.display.value+='9'">
-<input type="button" value ="8" onclick ="cal.display.value+='8'">
-<input type="button" value ="7" onclick ="cal.display.value+='7'">
-<input type="button" value ="+" onclick ="cal.display.value+='+'">
-<br><br>
-<input type="button" value ="6" onclick ="cal.display.value+='6'">
-<input type="button" value ="5" onclick ="cal.display.value+='5'">
-<input type="button" value ="4" onclick ="cal.display.value+='4'">
-<input type="button" value ="-" onclick ="cal.display.value+='-'">
-<br><br>
-<input type="button" value ="3" onclick ="cal.display.value+='3'">
-<input type="button" value ="2" onclick ="cal.display.value+='2'">
-<input type="button" value ="1" onclick ="cal.display.value+='1'">
-<input type="button" value ="" onclick ="cal.display.value+=''">
-<br><br>
-<input type="button" value ="0" onclick ="cal.display.value+='0'">
-<input type="button" value ="/" onclick ="cal.display.value+='/'">
-<input type="button" value ="%" onclick ="cal.display.value+='%'">
-<input type="button" value ="=" onclick ="cal.display.value =eval(cal.display.value)">
-<br><br>
-<input type="button" value ="DELETE" onclick ="cal.display.value=''" id="del">
-<input type="button" value ="." onclick ="cal.display.value+='.'">
-</form>
-<body>
-</body>
+
+        </style>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript">
+
+$(document).ready(function() {
+    function showbmi () {
+        var weight = $("input#weight").val();
+        var height = $("input#height").val();
+        var bmi = "?";
+        
+        if (weight && height) {
+            bmi = Math.round(10 * weight / Math.pow(height/100, 2))/10;
+            if ( isNaN(bmi) ) bmi = "?";
+        }
+
+        $("#bmiresult").text(bmi);
+        return bmi;
+    }
+
+    $("form#bmi input").bind("keydown", function () {
+        setTimeout(function() {
+            showbmi();
+        }, 100);
+        return true;
+    });
+
+    $("form#bmi input").bind("change", function () {
+        showbmi();
+    });
+
+    $("form#bmi").bind("submit", function () {
+        showbmi();
+        return false;
+    });
+});
+
+        </script>
+    </head>
+    <body>
+      <h2>BMI 試算</h2>
+      <div id="bmi-calculator">
+        <div id="bmiresult">?</div>
+        <form id="bmi" action="#">
+          <div>
+            <div class="field">
+              <label>身高</label>
+              <input id="height" name="height" size="30" type="text" value="" autocomplete="off"> cm
+            </div>
+            <div class="field">
+              <label>體重</label>
+              <input id="weight" name="weight" size="30" type="text" value="" autocomplete="off"> kg
+            </div>
+            <div class="submit"><input class="submit" type="submit" value="計算"></div>
+          </div>
+        </form>
+      </div>
+    </body>
 </html>
